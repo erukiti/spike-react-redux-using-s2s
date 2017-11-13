@@ -1,0 +1,24 @@
+{
+  "name": "app",
+  "version": "1.0.0",
+  "main": "src/browser/app.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "electron ."
+  },
+  "devDependencies": {
+    "jest": "^21.2.1",
+    "react": "^16.1.0",
+    "react-dom": "^16.1.0",
+    "react-redux": "^5.0.6",
+    "redux": "^3.7.2",
+    "s2s": "../s2s/packages/s2s-cli",
+    "typescript": "^2.6.1"
+  },
+  "dependencies": {
+    "@types/electron": "^1.6.10",
+    "@types/node": "^8.0.51",
+    "@types/react": "^16.0.22",
+    "ts-node": "^3.3.0"
+  }
+}
