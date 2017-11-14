@@ -462,17 +462,13 @@ babel-types@^6.18.0, babel-types@^6.26.0:
     lodash "^4.17.4"
     to-fast-properties "^1.0.3"
 
-babylon@7.0.0-beta.32:
+babylon@7.0.0-beta.32, babylon@^7.0.0-beta.31:
   version "7.0.0-beta.32"
   resolved "https://registry.yarnpkg.com/babylon/-/babylon-7.0.0-beta.32.tgz#e9033cb077f64d6895f4125968b37dc0a8c3bc6e"
 
 babylon@^6.18.0:
   version "6.18.0"
   resolved "https://registry.yarnpkg.com/babylon/-/babylon-6.18.0.tgz#af2f3b88fa6f5c1e4c634d1a0f8eac4f55b395e3"
-
-babylon@^7.0.0-beta.31:
-  version "7.0.0-beta.31"
-  resolved "https://registry.yarnpkg.com/babylon/-/babylon-7.0.0-beta.31.tgz#7ec10f81e0e456fd0f855ad60fa30c2ac454283f"
 
 balanced-match@^1.0.0:
   version "1.0.0"
@@ -2407,8 +2403,8 @@ rc@^1.1.2, rc@^1.1.7:
     strip-json-comments "~2.0.1"
 
 react-dom@^16.1.0:
-  version "16.1.0"
-  resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-16.1.0.tgz#ab6fd2a285096f388aeba51919a573d06c9bdde4"
+  version "16.1.1"
+  resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-16.1.1.tgz#b2e331b6d752faf1a2d31399969399a41d8d45f8"
   dependencies:
     fbjs "^0.8.16"
     loose-envify "^1.1.0"
@@ -2427,8 +2423,8 @@ react-redux@^5.0.6:
     prop-types "^15.5.10"
 
 react@^16.1.0:
-  version "16.1.0"
-  resolved "https://registry.yarnpkg.com/react/-/react-16.1.0.tgz#1c2bdac3c17fe7ee9282fa35aca6cc36387903e1"
+  version "16.1.1"
+  resolved "https://registry.yarnpkg.com/react/-/react-16.1.1.tgz#d5c4ef795507e3012282dd51261ff9c0e824fe1f"
   dependencies:
     fbjs "^0.8.16"
     loose-envify "^1.1.0"
@@ -2627,27 +2623,28 @@ rimraf@2, rimraf@^2.2.8, rimraf@^2.5.1, rimraf@^2.6.1:
   dependencies:
     glob "^7.0.5"
 
-s2s-handler-babel@^0.1.1:
+s2s-handler-babel@^0.1.2:
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/s2s-handler-babel/-/s2s-handler-babel-0.1.2.tgz#b6abe4d7b9b40818f682bb7a41d28bc904e53e39"
   dependencies:
     babel-core "^6.25.0"
 
-s2s-handler-typescript@^0.1.1:
+s2s-handler-typescript@^0.1.2:
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/s2s-handler-typescript/-/s2s-handler-typescript-0.1.2.tgz#c872fb99f4d3e1004ac69fc7e00955f8e152c6ba"
   dependencies:
     "@babel/core" "^7.0.0-beta.31"
     "@babel/plugin-syntax-typescript" "^7.0.0-beta.31"
 
-s2s-hook-prettier@^0.2.0:
+s2s-hook-prettier@^0.2.1:
   version "0.2.1"
   resolved "https://registry.yarnpkg.com/s2s-hook-prettier/-/s2s-hook-prettier-0.2.1.tgz#65bf330eb7e8fe1979d61f28c7a43d08654fc8e7"
   dependencies:
     prettier "^1.8.2"
 
-s2s@../s2s/packages/s2s-cli:
-  version "0.12.1"
+s2s@^0.13.0:
+  version "0.13.0"
+  resolved "https://registry.yarnpkg.com/s2s/-/s2s-0.13.0.tgz#9771d730381c197702b4cd5fbba211869a96fb7f"
   dependencies:
     babel-polyfill "^6.26.0"
     chalk "^2.3.0"
@@ -2657,9 +2654,9 @@ s2s@../s2s/packages/s2s-cli:
     key-locker "^0.2.0"
     micromatch "^2.3.11"
     prettier "^1.8.2"
-    s2s-handler-babel "^0.1.1"
-    s2s-handler-typescript "^0.1.1"
-    s2s-hook-prettier "^0.2.0"
+    s2s-handler-babel "^0.1.2"
+    s2s-handler-typescript "^0.1.2"
+    s2s-hook-prettier "^0.2.1"
     slash "^1.0.0"
 
 safe-buffer@^5.0.1, safe-buffer@^5.1.1, safe-buffer@~5.1.0, safe-buffer@~5.1.1:

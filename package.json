@@ -1,6 +1,7 @@
 {
-  "name": "app",
-  "version": "1.0.0",
+  "private": true,
+  "name": "spike-react-redux-using-s2s",
+  "version": "0.1.0",
   "main": "src/browser/app.js",
   "license": "MIT",
   "scripts": {
@@ -12,21 +13,22 @@
     "@babel/types": "^7.0.0-beta.32",
     "@types/react-redux": "^5.0.12",
     "@types/redux": "^3.6.0",
-    "babylon": "^7.0.0-beta.31",
-    "globby": "^6.1.0",
-    "jest": "^21.2.1",
-    "react": "^16.1.0",
-    "react-dom": "^16.1.0",
-    "react-redux": "^5.0.6",
-    "redux": "^3.7.2",
-    "s2s": "../s2s/packages/s2s-cli",
-    "typescript": "^2.6.1"
-  },
-  "dependencies": {
     "@types/babel-types": "^6.25.1",
     "@types/electron": "^1.6.10",
     "@types/node": "^8.0.51",
     "@types/react": "^16.0.22",
-    "ts-node": "^3.3.0"
+    "babylon": "^7.0.0-beta.31",
+    "globby": "^6.1.0",
+    "jest": "^21.2.1",
+    "s2s": "^0.13.0",
+    "ts-node": "^3.3.0",
+    "typescript": "^2.6.1"
+  },
+  "dependencies": {
+    "electron": "^1.7.9",
+    "react": "^16.1.0",
+    "react-dom": "^16.1.0",
+    "react-redux": "^5.0.6",
+    "redux": "^3.7.2"
   }
 }
