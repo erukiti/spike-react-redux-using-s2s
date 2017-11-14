@@ -1,79 +1,126 @@
 const path = require('path')
+const fs = require('fs')
 
-// const actionTypesPlugin = require('babel-plugin-s2s-action-types').default
-// const actionCreaterPlugin = require('babel-plugin-s2s-action-creater').default
-// const reducerCaseCreaterPlugin = require('babel-plugin-s2s-reducer-case-creater').default
-// const actionRootPlugin = require('babel-plugin-s2s-action-root').default
-// const reducerTestCasePlugin = require('babel-plugin-s2s-reducer-test-case').default
-// const initilaStetePlugin = require('babel-plugin-s2s-initial-state-creater').default
-// const stateRootPlugin = require('babel-plugin-s2s-state-root').default
-// const reducerRootPlugin = require('babel-plugin-s2s-reducer-root').default
+const tsSyntax = require('@babel/plugin-syntax-typescript').default
+const globby = require('globby')
+const { parse } = require('babylon')
 
-const cwd = process.cwd()
+const t = require('@babel/types')
+const traverse = require('@babel/traverse').default
+const babelTemplate = require('@babel/template').default
 
-const getRootDir = (...x) => path.resolve(cwd, 'src', ...x)
-const getTyepDir = x => getRootDir('types', x)
+const re = /([^/]+)\/reducer\./
+const reAction = /([^/]+)\/action\./
 
-const rootReducerPath = getRootDir('reducer.js')
-const rootActionPath = getTyepDir('action.js')
-const rootStatePath = getTyepDir('state.js')
+const toUpperCamelCase = s =>
+  s.substr(0, 1).toUpperCase() +
+  s.substr(1).replace(/-([a-z])/g, matched => matched.toUpperCase())
+const toLowerCamelCase = s =>
+  s.substr(0, 1).toLowerCase() +
+  s.substr(1).replace(/-([a-z])/g, matched => matched.toUpperCase())
+
+const templ = s =>
+  babelTemplate(s, { sourceType: 'module', plugins: ['typescript'] })()
+
+const WasCreated = Symbol('WasCreated')
+
+const actionsPlugin = babel => {
+  const visitor = {
+    Program: {
+      exit: (nodePath, state) => {
+        const actions = {}
+        globby.sync(state.opts.input).forEach(filepath => {
+          const matched = reAction.exec(filepath)
+          actions[matched[1]] = []
+
+          const src = fs.readFileSync(filepath).toString()
+          const ast = parse(src, {
+            sourceType: 'module',
+            plugins: ['typescript', 'classProperties']
+          })
+          traverse(ast, {
+            ClassMethod: nodePath => {
+              actions[matched[1]].push(nodePath.node.key.name)
+            }
+          })
+        })
+        console.log(actions)
+
+        const header = templ(`import {Dispatch as ReduxDispatch} from 'redux'`)
+        header.leadingComments = [{ type: 'CommentLine', value: 'GENERATED!' }]
+        const bodies = [header]
+
+      }
+    }
+  }
+  return {
+    inherits: tsSyntax,
+    visitor
+  }
+}
+
+const reducersPlugin = babel => {
+  // const {types: t} = babel
+  const visitor = {
+    Program: {
+      exit: (nodePath, state) => {
+        const names = []
+
+        globby.sync(state.opts.input).forEach(filepath => {
+          const matched = re.exec(filepath)
+          // assert(matched)
+          names.push(matched[1])
+        })
+
+        const header = templ(`import { combineReducers } from 'redux'`)
+        header.leadingComments = [{ type: 'CommentLine', value: 'GENERATED!' }]
+        const bodies = [header]
+
+        names.forEach(name => {
+          bodies.push(
+            templ(
+              `import ${name}Reducer, { ${toUpperCamelCase(
+                name
+              )}State } from './${name}/reducer'`
+            )
+          )
+        })
+
+        const args = names.map(name => `${name}: ${name}Reducer`).join(', ')
+        bodies.push(templ(`export default combineReducers({${args}})`))
+
+        const args2 = names
+          .map(name => `${name}: ${toUpperCamelCase(name)}State`)
+          .join('\n')
+
+        bodies.push(templ(`export interface State {\n${args2}\n}`))
+        nodePath.node.body = bodies
+      }
+    }
+  }
+
+  return {
+    inherits: tsSyntax,
+    visitor
+  }
+}
 
 const plugins = [
   {
-    test: /actionTypes.js$/,
-    plugin: ['s2s-action-types', { removePrefix: 'src/containers' }],
+    test: /reducer\.(js|ts)/,
+    input: '../reducers.ts',
+    output: '../reducers.ts',
+    plugin: [reducersPlugin, { input: 'src/renderer/**/reducer.ts' }]
   },
-//   {
-//     test: /actionTypes.js$/,
-//     output: 'actions.js',
-//     plugin: [actionCreaterPlugin],
-//   },
-//   {
-//     test: /actionTypes.js$/,
-//     input: 'reducer.js',
-//     output: 'reducer.js',
-//     plugin: [reducerCaseCreaterPlugin],
-//   },
-//   {
-//     test: /actionTypes.js$/,
-//     input: rootActionPath,
-//     output: rootActionPath,
-//     plugin: [
-//       actionRootPlugin,
-//       { input: 'src/**/actionTypes.js', output: rootActionPath },
-//     ],
-//   },
-//   {
-//     test: /containers\/.+reducer.js/,
-//     plugin: [initilaStetePlugin],
-//   },
-//   {
-//     test: /containers\/.+reducer.js/,
-//     input: 'reducer.test.js',
-//     output: 'reducer.test.js',
-//     plugin: [reducerTestCasePlugin],
-//   },
-//   {
-//     test: /containers\/.+reducer.js/,
-//     input: rootStatePath,
-//     output: rootStatePath,
-//     plugin: [
-//       stateRootPlugin,
-//       { input: 'src/containers/**/reducer.js', output: rootStatePath },
-//     ],
-//   },
-//   {
-//     test: /containers\/.+reducer.js/,
-//     input: rootReducerPath,
-//     output: rootReducerPath,
-//     plugin: [
-//       reducerRootPlugin,
-//       { input: 'src/containers/**/reducer.js', output: rootReducerPath },
-//     ],
-//   },
+  {
+    test: /action\.(js|ts)/,
+    input: '../actions.ts',
+    output: '../actions.ts',
+    plugin: [actionsPlugin, { input: 'src/renderer/**/action.ts' }]
+  }
 ]
 
 module.exports = {
-    watch: './**/*.ts',
-    plugins
+  watch: 'src/**/*.(js|ts)',
+  plugins
 }

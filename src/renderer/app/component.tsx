@@ -1,5 +1,7 @@
 import * as React from 'react'
 
+import {AppProps} from './index'
+
 export default class AppComponent extends React.Component<any> {
     render() {
         return <div>

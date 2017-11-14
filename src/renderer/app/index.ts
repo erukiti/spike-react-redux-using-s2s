@@ -2,8 +2,17 @@ import {connect} from 'react-redux'
 
 import AppComponent from './component'
 import AppAction from './action'
+import {State} from '../reducers'
+import {ActionType} from '../actions'
 
-const mapStateToProps = (state) => {
+interface AppActionProps{
+    addCount: () => void
+}
+
+export type AppProps = State | AppActionProps
+
+
+const mapStateToProps = (state: State) => {
     return state
 }
 
@@ -12,7 +21,7 @@ const mapDispatchToProps = (dispatch) => ({dispatch})
 const action = new AppAction()
 
 const mergeProps = (stateProps, {dispatch}, ownProps) => {
-    action.setDispatch(dispatch)
+    action.dispatch = dispatch
 
     return {
         ...stateProps,

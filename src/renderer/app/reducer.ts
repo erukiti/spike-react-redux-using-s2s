@@ -1,10 +1,12 @@
-import actions from '../actions'
+import actions, {ActionType} from '../actions'
 
 const initialState = {
     count: 0
 }
 
-export default function appReducer(state = initialState, action) {
+export type AppState = typeof initialState
+
+export default function appReducer(state: AppState = initialState, action: ActionType) {
     switch (action.type) {
         case actions.APP_ADD_COUNT: {
             return {count: state.count + 1}

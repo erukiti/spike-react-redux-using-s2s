@@ -1,11 +1,7 @@
-import actions from '../actions'
+import actions, {Dispatch} from '../actions'
 
 export default class AppAction {
-    dispatch
-
-    setDispatch(dispatch) {
-        this.dispatch = dispatch
-    }
+    dispatch: Dispatch = null
 
     addCount() {
         this.dispatch({type: actions.APP_ADD_COUNT})
