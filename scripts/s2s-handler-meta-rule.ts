@@ -76,7 +76,17 @@ const metaRuleHandler = (code, { eventPath, plugin: opts, filename }) => {
 
   const outputTypes = ['BabelNodePath', 'BabelNode', '.ts']
 
-  const plugin = opts.plugin(meta, opts.pluginOpts)
+  let pluginCreator
+  if (typeof opts.plugin !== 'string') {
+    pluginCreator = opts.plugin
+  } else {
+    pluginCreator = require(path.join(process.cwd(), opts.plugin))
+    if ('default' in pluginCreator) {
+      pluginCreator = pluginCreator.default
+    }
+  }
+  const plugin = pluginCreator(meta, opts.pluginOpts)
+
   const inputType = plugin.inputTypes.find(inputType => inputType in sourceTypes)
   const outputType = outputTypes.find(outputType => plugin.outputTypes.indexOf(outputType) !== -1)
   const output = plugin.func(sourceTypes[inputType](), filename, inputType, outputType)
