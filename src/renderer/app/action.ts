@@ -1,5 +1,4 @@
-
-import actions, {Dispatch} from '../actions'
+import actions, { Dispatch } from '../actions'
 
 export default class AppAction {
   dispatch: Dispatch = null

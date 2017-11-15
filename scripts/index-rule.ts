@@ -27,8 +27,7 @@ export default function appReducer(state: ${upperName}State = initialState, acti
 `
 
     const actionSource = 
-`
-import actions, {Dispatch} from '../actions'
+`import actions, { Dispatch } from '../actions'
 
 export default class ${upperName}Action {
   dispatch: Dispatch = null
@@ -37,8 +36,7 @@ export default class ${upperName}Action {
 `
 
     const componentSource = 
-`
-import * as React from 'react'
+`import * as React from 'react'
 import {${upperName}Props} from './index'
 
 export default class ${upperName}Component extends React.Component<${upperName}Props> {
@@ -50,8 +48,7 @@ export default class ${upperName}Component extends React.Component<${upperName}P
 `
 
     const indexSource = 
-`
-import {connect} from 'react-redux'
+`import {connect} from 'react-redux'
 
 import ${upperName}Component from './component'
 import ${upperName}Action from './action'

@@ -1,5 +1,4 @@
-
-import actions, {ActionType} from '../actions'
+import actions, { ActionType } from '../actions'
 
 const initialState = {
   count: 0
