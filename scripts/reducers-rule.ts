@@ -6,6 +6,7 @@ const re = /([^/]+)\/reducer\./
 
 const reducersPlugin = (meta, opts) => {
   const func = (source, fileName, inputType, outputType) => {
+
     const names = globby.sync(opts.source).map(filepath => {
       const matched = re.exec(filepath)
       return matched[1]
@@ -27,7 +28,10 @@ ${names.map(name => `  ${name}: ${toUpperCamelCase(name)}State`).join('\n')}
 `
   }
   return {
-    func
+    name: 'reducers',
+    func,
+    inputTypes: [],
+    outputTypes: ['.ts'],
   }
 }
 

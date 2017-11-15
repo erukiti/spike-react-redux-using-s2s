@@ -90,7 +90,10 @@ export default connect(mapStateToProps, mapDispatchToProps, mergeProps)(${upperN
   }
 
   return {
-    func
+    name: 'index',
+    func,
+    inputTypes: ['.ts'],
+    outputTypes: ['.ts'],
   }
 }
 

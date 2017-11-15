@@ -56,7 +56,10 @@ export default actions
   }
 
   return {
-    func
+    name: 'actions',
+    func,
+    inputTypes: [],
+    outputTypes: ['.ts'],
   }
 }
 
